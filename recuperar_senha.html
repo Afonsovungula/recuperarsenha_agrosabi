@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgroSabi — Redefinir Senha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-dark: #1a4a2e;
+      --green-mid: #2d7a4f;
+      --green-bright: #38a65d;
+      --green-light: #e8f5ed;
+      --green-glow: rgba(56, 166, 93, 0.15);
+      --cream: #f7f4ef;
+      --text-dark: #1a2e22;
+      --text-muted: #6b8f77;
+      --white: #ffffff;
+      --error: #e05252;
+      --success: #38a65d;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Background decorativo */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -30%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56,166,93,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: -15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(26,74,46,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Folhas decorativas */
+    .leaf {
+      position: fixed;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .leaf-1 {
+      top: 5%;
+      left: 3%;
+      font-size: 120px;
+      transform: rotate(-20deg);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .leaf-2 {
+      bottom: 8%;
+      right: 4%;
+      font-size: 90px;
+      transform: rotate(30deg);
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    .leaf-3 {
+      top: 50%;
+      right: 8%;
+      font-size: 60px;
+      transform: rotate(-10deg);
+      animation: float 7s ease-in-out infinite 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-20deg); }
+      50% { transform: translateY(-15px) rotate(-15deg); }
+    }
+
+    /* Card principal */
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 60px rgba(26, 74, 46, 0.1), 0 4px 16px rgba(26, 74, 46, 0.06);
+      position: relative;
+      z-index: 1;
+      animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Barra verde topo */
+    .card-accent {
+      position: absolute;
+      top: 0;
+      left: 44px;
+      right: 44px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green-bright), var(--green-mid));
+      border-radius: 0 0 4px 4px;
+    }
+
+    /* Logo / ícone */
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--green-bright), var(--green-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--green-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text span {
+      color: var(--green-bright);
+    }
+
+    /* Títulos */
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--text-dark);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+
+    /* Campos */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #e0e8e3;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text-dark);
+      background: var(--cream);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--green-bright);
+      background: var(--white);
+      box-shadow: 0 0 0 4px var(--green-glow);
+    }
+
+    input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 4px rgba(224, 82, 82, 0.1);
+    }
+
+    /* Botão */
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--green-bright), var(--green-mid));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(56, 166, 93, 0.35);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Mensagens */
+    .msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      margin-bottom: 20px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.error {
+      background: #fef2f2;
+      color: var(--error);
+      border: 1px solid #fecaca;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .msg.success {
+      background: var(--green-light);
+      color: var(--green-dark);
+      border: 1px solid #bbf7d0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Loader */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Rodapé */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      .card { margin: 16px; padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="leaf leaf-1">🌿</div>
+  <div class="leaf leaf-2">🍃</div>
+  <div class="leaf leaf-3">🌱</div>
+
+  <div class="card">
+    <div class="card-accent"></div>
+
+    <div class="logo-area">
+      <div class="logo-icon">🌾</div>
+      <div class="logo-text">Agro<span>Sabi</span></div>
+    </div>
+
+    <h1>Redefinir Senha</h1>
+    <p class="subtitle">Escolhe uma nova palavra-passe para a tua conta AgroSabi.</p>
+
+    <div class="msg error" id="msgErro">
+      <span>⚠️</span>
+      <span id="textoErro">Ocorreu um erro.</span>
+    </div>
+
+    <div class="msg success" id="msgSucesso">
+      <span>✅</span>
+      <span>Senha alterada com sucesso! Podes voltar ao app e fazer login.</span>
+    </div>
+
+    <div id="formulario">
+      <div class="field">
+        <label for="novaSenha">Nova Senha</label>
+        <input type="password" id="novaSenha" placeholder="Mínimo 8 caracteres" />
+      </div>
+
+      <div class="field">
+        <label for="confirmarSenha">Confirmar Nova Senha</label>
+        <input type="password" id="confirmarSenha" placeholder="Repete a nova senha" />
+      </div>
+
+      <button id="btnSubmit" onclick="redefinirSenha()">
+        Actualizar Senha
+      </button>
+    </div>
+
+    <div class="footer">AgroSabi © 2026 · Agricultura inteligente para Angola</div>
+  </div>
+
+  <script>
+    const BACKEND_URL = 'https://vigilant-computing-machine-7vv9g5pwgw463r44j-8080.app.github.dev/';
+
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('token');
+    }
+
+    async function redefinirSenha() {
+      const novaSenha = document.getElementById('novaSenha').value;
+      const confirmarSenha = document.getElementById('confirmarSenha').value;
+      const btn = document.getElementById('btnSubmit');
+
+      // Reset visual
+      document.getElementById('novaSenha').classList.remove('error');
+      document.getElementById('confirmarSenha').classList.remove('error');
+      document.getElementById('msgErro').style.display = 'none';
+
+      // Validações
+      if (!novaSenha || novaSenha.length < 8) {
+        mostrarErro('A senha deve ter pelo menos 8 caracteres.');
+        document.getElementById('novaSenha').classList.add('error');
+        return;
+      }
+
+      if (novaSenha !== confirmarSenha) {
+        mostrarErro('As senhas não coincidem.');
+        document.getElementById('confirmarSenha').classList.add('error');
+        return;
+      }
+
+      const token = getToken();
+      if (!token) {
+        mostrarErro('Link inválido ou expirado. Solicita um novo link no app.');
+        return;
+      }
+
+      // Loading
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> A actualizar...';
+
+      try {
+        const resposta = await fetch(`${BACKEND_URL}/redefinir_senha`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, novaSenha }),
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+          mostrarErro(dados.error || 'Erro ao redefinir senha. Tenta novamente.');
+          btn.disabled = false;
+          btn.innerHTML = 'Actualizar Senha';
+          return;
+        }
+
+        // Sucesso
+        document.getElementById('formulario').style.display = 'none';
+        document.getElementById('msgSucesso').style.display = 'flex';
+
+      } catch (err) {
+        mostrarErro('Erro de ligação. Verifica a tua internet e tenta novamente.');
+        btn.disabled = false;
+        btn.innerHTML = 'Actualizar Senha';
+      }
+    }
+
+    function mostrarErro(texto) {
+      document.getElementById('textoErro').textContent = texto;
+      document.getElementById('msgErro').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
