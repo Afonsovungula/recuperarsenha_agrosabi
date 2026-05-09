@@ -5,6 +5,10 @@
       const params = new URLSearchParams(window.location.search);
       return params.get('token');
     }
+function getID_usuario(){
+  const params = new URLSearchParams(window.location.search);
+      return params.get('id_usuario');
+}
 
     async function redefinirSenha() {
       const novaSenha = document.getElementById('novaSenha').value;
@@ -34,6 +38,13 @@
         mostrarErro('Link inválido ou expirado. Solicita um novo link no app.');
         return;
       }
+      
+
+      const id_usuario = getID_usuario()
+      if (!token) {
+        mostrarErro('não encontramos seu ID. Solicita um novo link no app.');
+        return;
+      }
 
       // Loading
       btn.disabled = true;
@@ -43,7 +54,7 @@
         const resposta = await fetch(`${BACKEND_URL}/redefinir_senha`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token, novaSenha }),
+          body: JSON.stringify({ token, novaSenha, id_usuario }),
         });
 
         const dados = await resposta.json();
