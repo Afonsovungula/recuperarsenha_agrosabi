@@ -409,9 +409,9 @@
       btn.innerHTML = '<span class="spinner"></span> A actualizar...';
       
       try {
-        console.log("Enviando requisição para:", `${BACKEND_URL}/redefinir_senha`);
+        console.log("Enviando requisição para:", `${BACKEND_URL}redefinir_senha`);
         
-        const resposta = await fetch(`${BACKEND_URL}/redefinir_senha`, {
+        const resposta = await fetch(`${BACKEND_URL}redefinir_senha`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
